@@ -6,7 +6,9 @@ module.exports = {
 		.setName('hades')
 		.setDescription('Muestra las misiones del clan Hades'),
 	async execute(interaction) {
+
 		const EmbedOlimpocoin = new MessageEmbed()
+		
 			.setColor('#b52121')
 			.setTitle('⚔️𝐑𝐄𝐓𝐎𝐒 𝐃𝐄𝐋 𝐂𝐋𝐀𝐍 𝐇𝐀𝐃𝐄𝐒⚔️')
 			.setAuthor({ name: '༻༺ 🪐 Ωlım₱o 🪐 ༻༺'})

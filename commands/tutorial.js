@@ -6,7 +6,9 @@ module.exports = {
 		.setName('tutorial')
 		.setDescription('Muestra como instalar la wallet'),
 	async execute(interaction) {
+
 		const EmbedOlimpocoin = new MessageEmbed()
+		
 			.setColor('#2fc14c')
 			.setTitle('Como instalar la wallet para las OLYMP')
 			.setAuthor({ name: '༻༺ 🪐 Ωlım₱o 🪐 ༻༺'})

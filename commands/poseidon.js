@@ -6,7 +6,9 @@ module.exports = {
 		.setName('poseidon')
 		.setDescription('Muestra las misiones del clan Poseidon'),
 	async execute(interaction) {
+
 		const EmbedOlimpocoin = new MessageEmbed()
+		
 			.setColor('#2197b5')
 			.setTitle('🌊𝐑𝐄𝐓𝐎𝐒 𝐃𝐄𝐋 𝐂𝐋𝐀𝐍 𝐏𝐎𝐒𝐄𝐈𝐃𝐎𝐍🌊')
 			.setAuthor({ name: '༻༺ 🪐 Ωlım₱o 🪐 ༻༺'})

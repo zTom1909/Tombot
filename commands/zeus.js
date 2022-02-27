@@ -6,7 +6,9 @@ module.exports = {
 		.setName('zeus')
 		.setDescription('Muestra las misiones del clan Zeus'),
 	async execute(interaction) {
+
 		const EmbedOlimpocoin = new MessageEmbed()
+		
 			.setColor('#f7f72b')
 			.setTitle('⚡𝐑𝐄𝐓𝐎𝐒 𝐃𝐄𝐋 𝐂𝐋𝐀𝐍 𝐙𝐄𝐔𝐒⚡')
 			.setAuthor({ name: '༻༺ 🪐 Ωlım₱o 🪐 ༻༺'})

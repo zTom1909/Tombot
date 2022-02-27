@@ -16,14 +16,14 @@ const rest = new REST({ version: '9' }).setToken(token);
 
 (async () => {
 	try {
-		console.log('Started refreshing application (/) commands.');
+		console.log('Se empezo a reiniciar los slash commands.');
 
 		await rest.put(
-			Routes.applicationCommands(clientId), //Routes.applicationCommands(clientId),
+			Routes.applicationCommands(clientId), //Routes.applicationGuildCommands(clientId, guildId),
 			{ body: commands },
 		);
 
-		console.log('Successfully reloaded application (/) commands.');
+		console.log('Slash commands reiniciados correctamente.');
 	} catch (error) {
 		console.error(error);
 	}
