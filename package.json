@@ -2,9 +2,12 @@
   "dependencies": {
     "@discordjs/builders": "^0.12.0",
     "@discordjs/rest": "^0.3.0",
+    "crypto.js": "^3.0.0",
     "discord-api-types": "^0.27.3",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
-    "megadb": "^3.4.0"
+    "ffmpeg": "^0.0.4",
+    "megadb": "^3.4.0",
+    "ytdl-core": "^4.10.1"
   }
 }

@@ -28,20 +28,14 @@ const setReportes = new db.crearDB("setReportes")
 canalOrigen = "1"
 canalObjetivo = "1"
 
+'use strict';
 
 
 client.on("ready", () => {
 
     console.log("Bot iniciado con exito")
 
-
-    client.user.setPresence({
-        activity: {
-            name: "en Olimpo Community",
-            type: "PLAYING"
-        },
-        status: "online"
-    });
+    client.user.setActivity('en Olimpo Community', { type: 'PLAYING' });
     
 });
 
@@ -72,6 +66,32 @@ client.on("messageCreate", async (message) => {
             if (arrayClear[1] <= 100) message.channel.bulkDelete(arrayClear[1], true)
             else message.reply("No puedes eliminar mas de 100 mensajes!")
         
+        }
+
+        if (command == "encrypt") {
+
+            arrayEncriptado = message.content.split(' ')
+            arrayEncriptado.shift()
+
+            let mensaje = arrayEncriptado.join(' ');
+            let buff = new Buffer.from(mensaje);
+            let encriptado = buff.toString('base64');
+
+            message.reply(encriptado)
+
+        }
+
+        if (command == "decrypt") {
+
+            arrayDesencriptado = message.content.split(' ')
+            arrayDesencriptado.shift()
+
+            let mensaje = arrayDesencriptado.join(' ');
+            let buff = new Buffer.from(mensaje, 'base64');
+            let desencriptado = buff.toString('ascii');
+
+            message.reply(desencriptado)
+
         }
 
         if (command === "report") {
@@ -200,7 +220,7 @@ client.on("messageCreate", async (message) => {
                 if (arrayConfig[2].startsWith('<#') && arrayConfig[2].endsWith('>')) arrayC[2] = arrayC[2].slice(2, -1);
                     
 
-                if (setReport.set(message.guild.id, arrayC[2])) return message.reply("**Canal de reportes cambiado a:** " + arrayConfig[2])
+                if (setReport.set(message.guild.id, arrayC[2])) return message.reply("**Canal de reportes cambiado a:** <@" + arrayC[2]+">")
             
             }
 
