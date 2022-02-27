@@ -166,10 +166,12 @@ client.on("messageCreate", async (message) => {
             arrayConfig = message.content.split(' ')
             arrayC = message.content.split(' ')
 
-            if (!arrayConfig[1]) return message.reply("**Por favor, espeficica un subcomando**")
+            let subcommand = arrayConfig[1]
+
+            if (!subcommand) return message.reply("**Por favor, espeficica un subcomando**")
 
 
-            if (arrayConfig[1] == "setPrefix") {
+            if (subcommand == "setPrefix") {
                 
                 if (!arrayConfig[2]) return message.reply("**Por favor, espeficica un prefix**")
 
@@ -177,7 +179,7 @@ client.on("messageCreate", async (message) => {
             
             }
             
-            if (arrayConfig[1] == "setMision") {
+            if (subcommand == "setMision") {
 
                 if (!arrayConfig[2]) return message.reply("**Por favor, espeficica el numero de la mision**")
                 if (!arrayConfig[3]) return message.reply("**Por favor, espeficica la recompensa**")
@@ -191,7 +193,7 @@ client.on("messageCreate", async (message) => {
             
             }
             
-            if (arrayConfig[1] == "setReport") {
+            if (subcommand == "setReport") {
                 
                 if (!arrayConfig[2]) return message.reply("**Por favor, espeficica un canal**")
 
@@ -202,30 +204,32 @@ client.on("messageCreate", async (message) => {
             
             }
 
-            if (arrayConfig[1] == "clearReports") {
+            if (subcommand == "clearReports") {
 
-                if (!message.mentions.members.size) return message.reply("**Debes mencionar a un usuario**")
+                if (!arrayConfig[2]) return message.reply("**Debes mencionar a un usuario**")
 
-                let userId = message.mentions.users.first().id
+                if (arrayConfig[2].startsWith('<@') && arrayConfig[2].endsWith('>')) arrayConfig[2] = arrayConfig[2].slice(2, -1);
+                let userId = arrayConfig[2]
 
                 let reportes;
                 if (setReportes.has(userId)) reportes = await setReportes.get(userId)
                 else reportes = 0
             
-                if (setReportes.set(userId, 0)) return message.reply("**Reportes de ** "+arrayConfig[2]+" **limpiados con exito**")
+                if (setReportes.set(userId, 0)) return message.reply("**Reportes de ** <@"+userId+"> **limpiados con exito**")
             }
 
-            if (arrayConfig[1] == "viewReports") {
+            if (subcommand == "viewReports") {
 
-                if (!message.mentions.members.size) return message.reply("**Debes mencionar a un usuario**")
+                if (!arrayConfig[2]) return message.reply("**Debes mencionar a un usuario**")
 
-                let userId = message.mentions.users.first().id
+                if (arrayConfig[2].startsWith('<@') && arrayConfig[2].endsWith('>')) arrayConfig[2] = arrayConfig[2].slice(2, -1);
+                let userId = arrayConfig[2]
 
                 let reportes;
                 if (setReportes.has(userId)) reportes = await setReportes.get(userId)
                 else reportes = 0
             
-                message.reply("El usuario **"+arrayConfig[2]+"** posee ` "+reportes+" ` reportes")
+                message.reply("**El usuario** <@"+userId+"> **posee** ` "+reportes+" ` **reportes**")
             }
         }
     }
