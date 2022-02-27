@@ -19,14 +19,18 @@ module.exports = {
 
 
 		const EmbedOlimpocoin = new MessageEmbed()
-		
+
 			.setColor('#757575')
 			.setTitle('Guia de configuracion del bot')
 			.setAuthor({ name: '༻༺ 🪐 Ωlım₱o 🪐 ༻༺'})
-			.setDescription('Uso: '+prefix+'config <subcomando>')
+			.setDescription('> Uso: '+prefix+'config <subcomando>')
 			.setThumbnail('https://i.imgur.com/EKBLLjC.jpg')
 			.addFields(
-				{ name: 'Subcomandos', value: '> - **setPrefix** `<prefix>` ➔ Cambia el prefix del bot\n> - **setMision** `<mision>` `<recompensa>` `<reto>` ➔ Cambia las misiones del comando `/misiones`\n> - **setReport** `<mencion>` `<razon>` ➔ Especifica el canal de reportes', inline: false },
+				{ name: 'Prefix', value: '- **'+prefix+'config setPrefix** `<prefix>` ➔ Cambia el prefix del bot' },
+				{ name: 'Misiones', value: '- **'+prefix+'config setMision** `<mision>` `<recompensa>` `<reto>` ➔ Cambia las misiones del comando `/misiones`' },
+				{ name: 'Canal Reportes', value: '- **'+prefix+'config setReport** `<canalID>` ➔ Especifica el canal de reportes' },
+				{ name: 'Limpiar Reportes', value: '- **'+prefix+'config clearReports** `<mencion>` ➔ Limpia los reportes de un usuario' },
+				{ name: 'Ver Reportes', value: '- **'+prefix+'config viewReports** `<mencion>` ➔ Ve los reportes de un usuario'}
 			)
 			.setImage('https://i.imgur.com/SJQVLgD.png')
 			.setFooter({ text: 'Necesitas permisos de admin para usarlos!'});

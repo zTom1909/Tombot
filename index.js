@@ -23,7 +23,7 @@ const setMision2 = new db.crearDB("setMision2")
 const setMision3 = new db.crearDB("setMision3")
 const setReport = new db.crearDB("setReport")
 const indexsetReport = new db.crearDB("setReport")
-
+const setReportes = new db.crearDB("setReportes")
 
 canalOrigen = "1"
 canalObjetivo = "1"
@@ -55,7 +55,7 @@ client.on("messageCreate", async (message) => {
     
     let prefix;
     if (indexsetPrefix.has(message.guild.id)) prefix = await indexsetPrefix.get(message.guild.id)
-    else prefix = "*"    
+    else prefix = "*"
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
@@ -89,19 +89,31 @@ client.on("messageCreate", async (message) => {
             if (!message.mentions.members.size) return message.reply("**Debes mencionar a un usuario**")
             if (!arrayReport[1]) return message.reply("**Debes Proporcionar una razon**")         
 
+            
+            let userId = message.mentions.users.first().id
+               
+            let reportes;
+            if (setReportes.has(userId)) reportes = await setReportes.get(userId)
+            else reportes = 0
+            
+            reportesSum = reportes + 1
+
             const EmbedReporte = new MessageEmbed()
 
                 .setColor('#ff0000')
                 .setTitle('**__Juzgado Oficial de Reportes de Olimpo__**')
-                .setAuthor({ name: 'Un usuario ha sido reportado' })
-                .setDescription(arrayReport[0])
+                .setAuthor({ name: '⚖️ Un usuario ha sido reportado ⚖️' })
+                .setDescription('Numero de reportes: '+reportesSum)
                 .addFields(
-                    { name: 'Usuario que lo reporta', value: message.author.tag },
+                    { name: 'Usuario reportado: ', value: arrayReport[0] },
                     { name: 'Razon', value: arrayR.join(' ') },
                 )
                 .setTimestamp()
+                .setFooter({ text: 'Usuario reportado por ' + message.author.tag });
 
-            client.channels.cache.get(canalReport).send({ embeds: [EmbedReporte] });
+            client.channels.cache.get(canalReport).send({ embeds: [EmbedReporte] });  
+
+            if (setReportes.set(userId, reportesSum)) return  
         }
 
         if (command === "canal") {
@@ -179,6 +191,32 @@ client.on("messageCreate", async (message) => {
 
                 if (setReport.set(message.guild.id, arrayConfig[2])) return message.reply("**Canal de reportes cambiado a:** ` " + arrayConfig[2] + " `")
             
+            }
+
+            if (arrayConfig[1] == "clearReports") {
+
+                if (!message.mentions.members.size) return message.reply("**Debes mencionar a un usuario**")
+
+                let userId = message.mentions.users.first().id
+
+                let reportes;
+                if (setReportes.has(userId)) reportes = await setReportes.get(userId)
+                else reportes = 0
+            
+                if (setReportes.set(userId, 0)) return message.reply("**Reportes de ** "+arrayConfig[2]+" **limpiados con exito**")
+            }
+
+            if (arrayConfig[1] == "viewReports") {
+
+                if (!message.mentions.members.size) return message.reply("**Debes mencionar a un usuario**")
+
+                let userId = message.mentions.users.first().id
+
+                let reportes;
+                if (setReportes.has(userId)) reportes = await setReportes.get(userId)
+                else reportes = 0
+            
+                message.reply("El usuario **"+arrayConfig[2]+"** posee ` "+reportes+" ` reportes")
             }
         }
     }
