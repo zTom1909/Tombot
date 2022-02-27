@@ -86,11 +86,12 @@ client.on("messageCreate", async (message) => {
             arrayR.shift()
             var cortador = arrayR.splice(0, 1)
 
-            if (!message.mentions.members.size) return message.reply("**Debes mencionar a un usuario**")
+            if (!arrayReport[0]) return message.reply("**Debes mencionar a un usuario**")
             if (!arrayReport[1]) return message.reply("**Debes Proporcionar una razon**")         
 
             
-            let userId = message.mentions.users.first().id
+            if (arrayReport[0].startsWith('<@') && arrayReport[0].endsWith('>')) arrayReport[0] = arrayReport[0].slice(2, -1);
+            let userId = arrayReport[0]
                
             let reportes;
             if (setReportes.has(userId)) reportes = await setReportes.get(userId)
@@ -105,22 +106,24 @@ client.on("messageCreate", async (message) => {
                 .setAuthor({ name: '⚖️ Un usuario ha sido reportado ⚖️' })
                 .setDescription('Numero de reportes: '+reportesSum)
                 .addFields(
-                    { name: 'Usuario reportado: ', value: arrayReport[0] },
+                    { name: 'Usuario reportado: ', value: '<@'+arrayReport[0]+'>' },
                     { name: 'Razon', value: arrayR.join(' ') },
                 )
                 .setTimestamp()
                 .setFooter({ text: 'Usuario reportado por ' + message.author.tag });
 
-            client.channels.cache.get(canalReport).send({ embeds: [EmbedReporte] });  
+            client.channels.cache.get(canalReport).send({ embeds: [EmbedReporte] }); 
+            message.reply("**Usuario reportado con exito**") 
 
             if (setReportes.set(userId, reportesSum)) return  
         }
 
         if (command === "canal") {
 
-            if (message.author.tag == "zTom1909#7395") {
+            if (message.author.id == "708119235238297661") {
 
                 arrayMensaje = message.content.split(' ')
+    
                 canalOrigen = arrayMensaje[1]
                 canalObjetivo = arrayMensaje[2]
 
@@ -139,16 +142,19 @@ client.on("messageCreate", async (message) => {
                     canalObjetivo = 1
                     return
 
-                } 
+                }
+                
+                if (canalOrigen.startsWith('<#') && canalOrigen.endsWith('>')) canalOrigen = canalOrigen.slice(2, -1);
+                if (canalObjetivo.startsWith('<#') && canalObjetivo.endsWith('>')) canalObjetivo = canalObjetivo.slice(2, -1);
 
-                message.reply("**Has configurado el canal de origen como: ** ` " + canalOrigen + " ` **y el canal objetivo como:** ` " + canalObjetivo + " ` **con exito**")
+                message.reply("**Has configurado el canal de origen como: ** <#" + canalOrigen + "> **y el canal objetivo como:** <#" + canalObjetivo + "> **con exito**")
             
             } else message.reply("**No eres Tom, no puedes usar ese comando**");
         }
 
         if (command === "canales") {
 
-            if (message.author.tag == "zTom1909#7395") message.reply("**Canal de origen: **` " + canalOrigen + " `\n**Canal objetivo: ** ` " + canalObjetivo + " `")
+            if (message.author.id == "708119235238297661") message.reply("**Canal de origen: ** <#" + canalOrigen + ">\n**Canal objetivo: ** <#" + canalObjetivo + ">")
             else message.reply("**No eres Tom, no puedes usar ese comando**");
 
         }
@@ -187,9 +193,12 @@ client.on("messageCreate", async (message) => {
             
             if (arrayConfig[1] == "setReport") {
                 
-                if (!arrayConfig[2]) return message.reply("**Por favor, espeficica una id de canal**")
+                if (!arrayConfig[2]) return message.reply("**Por favor, espeficica un canal**")
 
-                if (setReport.set(message.guild.id, arrayConfig[2])) return message.reply("**Canal de reportes cambiado a:** ` " + arrayConfig[2] + " `")
+                if (arrayConfig[2].startsWith('<#') && arrayConfig[2].endsWith('>')) arrayC[2] = arrayC[2].slice(2, -1);
+                    
+
+                if (setReport.set(message.guild.id, arrayC[2])) return message.reply("**Canal de reportes cambiado a:** " + arrayConfig[2])
             
             }
 
@@ -222,7 +231,7 @@ client.on("messageCreate", async (message) => {
     }
 
 
-    if (message.channel.id == canalOrigen & message.author.tag == "zTom1909#7395") {
+    if (message.channel.id == canalOrigen & message.author.id == "708119235238297661") {
 
         if (message.content.startsWith(prefix)) return;
         client.channels.cache.get(canalObjetivo).send(message.content);

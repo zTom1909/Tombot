@@ -28,7 +28,7 @@ module.exports = {
 			.addFields(
 				{ name: 'Prefix', value: '- **'+prefix+'config setPrefix** `<prefix>` ➔ Cambia el prefix del bot' },
 				{ name: 'Misiones', value: '- **'+prefix+'config setMision** `<mision>` `<recompensa>` `<reto>` ➔ Cambia las misiones del comando `/misiones`' },
-				{ name: 'Canal Reportes', value: '- **'+prefix+'config setReport** `<canalID>` ➔ Especifica el canal de reportes' },
+				{ name: 'Canal Reportes', value: '- **'+prefix+'config setReport** `<canal>` ➔ Especifica el canal de reportes' },
 				{ name: 'Limpiar Reportes', value: '- **'+prefix+'config clearReports** `<mencion>` ➔ Limpia los reportes de un usuario' },
 				{ name: 'Ver Reportes', value: '- **'+prefix+'config viewReports** `<mencion>` ➔ Ve los reportes de un usuario'}
 			)
