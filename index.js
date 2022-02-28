@@ -4,6 +4,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 const { canalReportes, token } = require('./config.json');
 const db = require("megadb");
 const fs = require('node:fs');
+const moment = require('moment');
 require("dotenv").config()
 
 
@@ -24,6 +25,9 @@ const setMision3 = new db.crearDB("setMision3")
 const setReport = new db.crearDB("setReport")
 const indexsetReport = new db.crearDB("setReport")
 const setReportes = new db.crearDB("setReportes")
+const setFecha = new db.crearDB("setFecha")
+const setEvento = new db.crearDB("setEvento")
+const setReminder = new db.crearDB("setReminder")
 
 canalOrigen = "1"
 canalObjetivo = "1"
@@ -46,13 +50,34 @@ client.on("messageCreate", async (message) => {
     if (message.channel.type === 'dm') return;
     if (message.author.bot) return;
 
-    
+
     let prefix;
     if (indexsetPrefix.has(message.guild.id)) prefix = await indexsetPrefix.get(message.guild.id)
     else prefix = "*"
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
+
+    let fecha;
+    if (setFecha.has(message.guild.id)) fecha = await setFecha.get(message.guild.id)
+    else fecha = "01 Jan 2001"
+
+    let evento;
+    if (setEvento.has(message.guild.id)) evento = await setEvento.get(message.guild.id)
+    else evento = "01 Jan 2001"
+
+    let canalReminder;
+    if (setReminder.has(message.guild.id)) canalReminder = await setReminder.get(message.guild.id)
+    else canalReminder = canalReportes
+
+    var checkminutes = 15, checkthe_interval = checkminutes * 60 * 1000;
+    setInterval(function () {
+        
+        if (moment().format('DD MMM YY') == fecha) {
+            client.channels.cache.get(canalReportes).send("Ha llegado el dia del **"+evento+"**, no olvides hacerlo!");
+        }
+
+    }, checkthe_interval);
 
 
     if (message.content.startsWith(prefix)) {
@@ -66,6 +91,27 @@ client.on("messageCreate", async (message) => {
             if (arrayClear[1] <= 100) message.channel.bulkDelete(arrayClear[1], true)
             else message.reply("No puedes eliminar mas de 100 mensajes!")
         
+        }
+
+        if (command == "remindme") {
+            
+            if (!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return message.reply("**No tienes permiso para ejecutar este comando**");
+            
+            var hoy = moment();
+
+            arrayFecha = message.content.split(' ')
+            arrayFecha.shift()
+
+            if (!arrayFecha[0]) return message.reply("**Por favor, espeficique una cantidad de dias**")
+            if (!arrayFecha[1]) return message.reply("**Por favor, espeficique un evento**")
+
+            var dias = arrayFecha.splice(0, 1)
+            textoEvento = arrayFecha.join(' ')
+
+
+            evento = hoy.clone().add(dias, 'day');       
+
+            if (setFecha.set(message.guild.id, evento.format("DD MMM YY")) && setEvento.set(message.guild.id, textoEvento)) return message.reply("Evento **"+textoEvento+"** configurado con exito para el dia **"+evento.format("DD MMM YY")+"**")
         }
 
         if (command == "encrypt") {
@@ -213,6 +259,17 @@ client.on("messageCreate", async (message) => {
             
             }
             
+            if (subcommand == "setReminder") {
+                
+                if (!arrayConfig[2]) return message.reply("**Por favor, espeficica un canal**")
+
+                if (arrayConfig[2].startsWith('<#') && arrayConfig[2].endsWith('>')) arrayC[2] = arrayC[2].slice(2, -1);
+                    
+
+                if (setReminder.set(message.guild.id, arrayC[2])) return message.reply("**Canal de recordatorio cambiado a:** <#" + arrayC[2]+">")
+            
+            }
+
             if (subcommand == "setReport") {
                 
                 if (!arrayConfig[2]) return message.reply("**Por favor, espeficica un canal**")
@@ -220,7 +277,7 @@ client.on("messageCreate", async (message) => {
                 if (arrayConfig[2].startsWith('<#') && arrayConfig[2].endsWith('>')) arrayC[2] = arrayC[2].slice(2, -1);
                     
 
-                if (setReport.set(message.guild.id, arrayC[2])) return message.reply("**Canal de reportes cambiado a:** <@" + arrayC[2]+">")
+                if (setReport.set(message.guild.id, arrayC[2])) return message.reply("**Canal de reportes cambiado a:** <#" + arrayC[2]+">")
             
             }
 
