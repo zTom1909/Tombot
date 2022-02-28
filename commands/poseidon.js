@@ -7,7 +7,7 @@ module.exports = {
 		.setDescription('Muestra las misiones del clan Poseidon'),
 	async execute(interaction) {
 
-		const EmbedOlimpocoin = new MessageEmbed()
+		const EmbedPoseidon = new MessageEmbed()
 		
 			.setColor('#2197b5')
 			.setTitle('🌊𝐑𝐄𝐓𝐎𝐒 𝐃𝐄𝐋 𝐂𝐋𝐀𝐍 𝐏𝐎𝐒𝐄𝐈𝐃𝐎𝐍🌊')
@@ -20,6 +20,6 @@ module.exports = {
 			.setImage('https://i.imgur.com/SJQVLgD.png')
 			.setFooter({ text: 'Completa las misiones de Poseidon para subir de rango!'});
 
-		interaction.reply({ embeds: [EmbedOlimpocoin] });
+		interaction.reply({ embeds: [EmbedPoseidon] });
 	},
 };

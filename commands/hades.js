@@ -7,7 +7,7 @@ module.exports = {
 		.setDescription('Muestra las misiones del clan Hades'),
 	async execute(interaction) {
 
-		const EmbedOlimpocoin = new MessageEmbed()
+		const EmbedHades = new MessageEmbed()
 		
 			.setColor('#b52121')
 			.setTitle('⚔️𝐑𝐄𝐓𝐎𝐒 𝐃𝐄𝐋 𝐂𝐋𝐀𝐍 𝐇𝐀𝐃𝐄𝐒⚔️')
@@ -20,6 +20,6 @@ module.exports = {
 			.setImage('https://i.imgur.com/SJQVLgD.png')
 			.setFooter({ text: 'Completa las misiones de Hades para subir de rango!'});
 
-		interaction.reply({ embeds: [EmbedOlimpocoin] });
+		interaction.reply({ embeds: [EmbedHades] });
 	},
 };

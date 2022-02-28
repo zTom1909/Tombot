@@ -37,7 +37,7 @@ module.exports = {
 		var recompensa3 = mision3.splice(0,1)
 
 		
-		const EmbedOlimpocoin = new MessageEmbed()
+		const EmbedMisiones = new MessageEmbed()
 
 			.setColor('#2fc14c')
 			.setTitle('Misiones de OlimpoCoins')
@@ -52,6 +52,6 @@ module.exports = {
 			.setImage('https://i.imgur.com/SJQVLgD.png')
 			.setFooter({ text: 'Usa OLYMP para comprar cosas en Olimpo!'});
 
-		interaction.reply({ embeds: [EmbedOlimpocoin] });
+		interaction.reply({ embeds: [EmbedMisiones] });
 	},
 };

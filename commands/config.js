@@ -18,7 +18,7 @@ module.exports = {
 		else prefix = "*"
 
 
-		const EmbedOlimpocoin = new MessageEmbed()
+		const EmbedConfig = new MessageEmbed()
 
 			.setColor('#757575')
 			.setTitle('Guia de configuracion del bot')
@@ -35,6 +35,6 @@ module.exports = {
 			.setImage('https://i.imgur.com/SJQVLgD.png')
 			.setFooter({ text: 'Necesitas permisos de admin para usarlos!'});
 
-		interaction.reply({ embeds: [EmbedOlimpocoin] });
+		interaction.reply({ embeds: [EmbedConfig] });
 	},
 };

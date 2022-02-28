@@ -225,6 +225,30 @@ client.on("messageCreate", async (message) => {
 
         }
 
+        if (command == "help") {
+
+            const EmbedHelp = new MessageEmbed()
+
+                .setColor('#757575')
+                .setTitle('Guia de ayuda del bot')
+                .setAuthor({ name: '༻༺ 🪐 Ωlım₱o 🪐 ༻༺' })
+                .setDescription('> Uso: ' + prefix + 'comando <subcomando> ➔ [Permiso] Explicacion')
+                .setThumbnail('https://i.imgur.com/EKBLLjC.jpg')
+                .addFields(
+                    { name: 'Clear', value: '- **' + prefix + 'clear** `<cantidad>` ➔ [BORRAR MENSAJES] Borra hasta 100 mensajes a la vez' },
+                    { name: 'Config', value: '- **' + prefix + 'config** `<help>` ➔ [ADMINISTRADOR] Ve el menu de configuracion' },
+                    { name: 'Decrypt', value: '- **' + prefix + 'decrypt** `<mensaje>` ➔ Desencripta un mensaje encriptado por el bot' },
+                    { name: 'Encrypt', value: '- **' + prefix + 'encrypt** `<mensaje>` ➔ Encripta un mensaje' },
+                    { name: 'Remindme', value: '- **' + prefix + 'remindme** `<dias>` `<evento>` ➔ [ADMINISTRADOR] Notifica de un evento' },
+                    { name: 'Report', value: '- **' + prefix + 'report** `usuario` `razon` ➔ Reporta a un usuario que incumpla las reglas' }
+                )
+                .setImage('https://i.imgur.com/SJQVLgD.png')
+                .setFooter({ text: 'Recuerda que tambien hay slash commands!' });
+
+            message.reply({ embeds: [EmbedHelp] });
+
+        }
+
         if (command === "config") {
 
             if (!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return message.reply("**No tienes permiso para ejecutar este comando**");
@@ -236,6 +260,29 @@ client.on("messageCreate", async (message) => {
 
             if (!subcommand) return message.reply("**Por favor, espeficica un subcomando**")
 
+
+            if (subcommand == "help") {
+                
+                const EmbedConfig = new MessageEmbed()
+
+                    .setColor('#757575')
+                    .setTitle('Guia de configuracion del bot')
+                    .setAuthor({ name: '༻༺ 🪐 Ωlım₱o 🪐 ༻༺' })
+                    .setDescription('> Uso: ' + prefix + 'config <subcomando>')
+                    .setThumbnail('https://i.imgur.com/EKBLLjC.jpg')
+                    .addFields(
+                        { name: 'Prefix', value: '- **' + prefix + 'config setPrefix** `<prefix>` ➔ Cambia el prefix del bot' },
+                        { name: 'Misiones', value: '- **' + prefix + 'config setMision** `<mision>` `<recompensa>` `<reto>` ➔ Cambia las misiones del comando `/misiones`' },
+                        { name: 'Canal Reportes', value: '- **' + prefix + 'config setReport** `<canal>` ➔ Especifica el canal de reportes' },
+                        { name: 'Limpiar Reportes', value: '- **' + prefix + 'config clearReports** `<mencion>` ➔ Limpia los reportes de un usuario' },
+                        { name: 'Ver Reportes', value: '- **' + prefix + 'config viewReports** `<mencion>` ➔ Ve los reportes de un usuario' }
+                    )
+                    .setImage('https://i.imgur.com/SJQVLgD.png')
+                    .setFooter({ text: 'Necesitas permisos de admin para usarlos!' });
+
+                message.reply({ embeds: [EmbedConfig] });
+
+            }
 
             if (subcommand == "setPrefix") {
                 
